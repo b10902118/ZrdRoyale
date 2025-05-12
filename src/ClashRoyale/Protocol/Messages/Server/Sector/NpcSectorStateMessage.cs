@@ -103,7 +103,7 @@ namespace ClashRoyale.Protocol.Messages.Server
             Writer.WriteBoolean(false); // IsEndConditionMatched
             Writer.WriteBoolean(false);
 
-            Writer.WriteBoolean(true); // IsNpc
+            Writer.WriteBoolean(true); // IsNpc // false to hang the game
 
             Writer.WriteBoolean(false); // isBattleEndedWithTimeOut
             Writer.WriteBoolean(false);
@@ -111,7 +111,7 @@ namespace ClashRoyale.Protocol.Messages.Server
             Writer.WriteBoolean(false); // hasPlayerFinishedNpcLevel
             Writer.WriteBoolean(false);
 
-            Writer.WriteBoolean(false); // isInOvertime
+            Writer.WriteBoolean(false); // isInOvertime // no effect
             Writer.WriteBoolean(false); // isTournamentMode
 
             Writer.WriteVInt(0);
@@ -141,36 +141,40 @@ namespace ClashRoyale.Protocol.Messages.Server
                 Writer.WriteVInt(i);
             }
 
+            var p = 9 - 1;
+            var e = 9 - 1;
+
+			// can move x, y
             // Player Right Princess Tower
-            Writer.WriteVInt(12);
+            Writer.WriteVInt(e);
             Writer.WriteVInt(13);
             Writer.WriteVInt(14500); // X
             Writer.WriteVInt(25500); // Y
             Writer.WriteHex("00007F00C07C0002000000000000");
 
             // Enemy Left Princess Tower
-            Writer.WriteVInt(12);
+            Writer.WriteVInt(p);
             Writer.WriteVInt(13);
             Writer.WriteVInt(3500); // X
             Writer.WriteVInt(6500); // Y
             Writer.WriteHex("00007F0080040001000000000000");
 
             // Player Left Princess Tower
-            Writer.WriteVInt(12);
+            Writer.WriteVInt(e);
             Writer.WriteVInt(13);
             Writer.WriteVInt(3500); // X
             Writer.WriteVInt(25500); // Y
             Writer.WriteHex("00007F00C07C0001000000000000");
 
             // Enemy Right Princess Tower
-            Writer.WriteVInt(12);
+            Writer.WriteVInt(p);
             Writer.WriteVInt(13);
             Writer.WriteVInt(14500); // X
             Writer.WriteVInt(6500); // Y
             Writer.WriteHex("00007F0080040002000000000000");
 
             // Enemy Crown Tower
-            Writer.WriteVInt(12);
+            Writer.WriteVInt(e);
             Writer.WriteVInt(13);
             Writer.WriteVInt(9000); // X
             Writer.WriteVInt(3000); // Y
@@ -178,7 +182,7 @@ namespace ClashRoyale.Protocol.Messages.Server
 
             Writer.WriteHex("000504077F7D7F0400050401007F7F0000");
             Writer.WriteVInt(0); // Ms before regen mana
-            Writer.WriteVInt(6); // Mana Start 
+            Writer.WriteVInt(6); // Elixer Start Trainer
             Writer.WriteVInt(0);
             Writer.WriteVInt(0);
             Writer.WriteVInt(0);
@@ -186,7 +190,7 @@ namespace ClashRoyale.Protocol.Messages.Server
             Writer.WriteHex("00007F7F7F7F7F7F7F7F00");
 
             // Player Crown Tower
-            Writer.WriteVInt(12);
+            Writer.WriteVInt(e);
             Writer.WriteVInt(13);
             Writer.WriteVInt(9000); // X
             Writer.WriteVInt(29000); // Y
@@ -194,7 +198,7 @@ namespace ClashRoyale.Protocol.Messages.Server
 
             Writer.WriteHex("00050401047D010400040706007F7F0000");
             Writer.WriteVInt(0); // Ms before regen mana
-            Writer.WriteVInt(6); // Elexir Start Enemy
+            Writer.WriteVInt(6); // Elexir Start Player
             Writer.WriteVInt(0);
             Writer.WriteVInt(0);
             Writer.WriteVInt(0);
@@ -209,17 +213,17 @@ namespace ClashRoyale.Protocol.Messages.Server
                 Writer.WriteVInt(0);
 
             // LogicHitpointComponent
-            Writer.WriteVInt(3668); // Enemy 
+            Writer.WriteVInt(PrincessTowerHp[e]); // Enemy 
             Writer.WriteVInt(0);
-            Writer.WriteVInt(3668); // Player
+            Writer.WriteVInt(PrincessTowerHp[p]); // Player
             Writer.WriteVInt(0);
-            Writer.WriteVInt(3668); // Enemy
+            Writer.WriteVInt(PrincessTowerHp[e]); // Enemy
             Writer.WriteVInt(0);
-            Writer.WriteVInt(3668); // Player
+            Writer.WriteVInt(PrincessTowerHp[p]); // Player
             Writer.WriteVInt(0);
-            Writer.WriteVInt(5832); // Enemy
+            Writer.WriteVInt(KingTowerHp[p]); // Player
             Writer.WriteVInt(0);
-            Writer.WriteVInt(5832); // Player
+            Writer.WriteVInt(KingTowerHp[e]); // Enemy
             Writer.WriteVInt(0);
 
             // LogicCharacterBuffComponent
@@ -339,5 +343,19 @@ namespace ClashRoyale.Protocol.Messages.Server
             for (var index = 0; index < towers; index++)
                 Writer.WriteHex("00000000000000A401A401");
         }
+        public static int[] KingTowerHp =
+        {
+            2400, 2568, 2736, 2904, 3096, 3312, 3528, 3768, 4008, 4392, 4824, 5304, 5832
+        };
+
+        public static int[] DuoKingTowerHp =
+        {
+            2880, 3082, 3284, 3485, 3716, 3975, 4234, 4522, 4810, 5271, 5789, 6365, 6999
+        };
+
+        public static int[] PrincessTowerHp =
+        {
+            1400, 1512, 1624, 1750, 1890, 2030, 2184, 2352, 2534, 2786, 3052, 3346, 3668
+        };
     }
 }

@@ -15,7 +15,8 @@ namespace ClashRoyale.Protocol.Messages.Client.Home
 
         public override async void Process()
         {
-            await new OwnHomeDataMessage(Device).SendAsync();
+            //await new OwnHomeDataMessage(Device).SendAsync();
+            await new NpcSectorStateMessage(Device).SendAsync();
         }
     }
 }

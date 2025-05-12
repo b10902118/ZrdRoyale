@@ -1,6 +1,7 @@
 ﻿using ClashRoyale.Logic;
 using ClashRoyale.Protocol.Messages.Server;
 using DotNetty.Buffers;
+using System.Threading;
 
 namespace ClashRoyale.Protocol.Messages.Client.Sector
 {
@@ -14,6 +15,7 @@ namespace ClashRoyale.Protocol.Messages.Client.Sector
 
         public override async void Process()
         {
+            //Thread.Sleep(5000);
             await new NpcSectorStateMessage(Device).SendAsync();
         }
     }

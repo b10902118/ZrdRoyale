@@ -51,7 +51,7 @@ namespace ClashRoyale.Logic
                 {
                     Logger.Log($"[C] Message {id} is not allowed in this state!", GetType(),
                         ErrorLevel.Warning);
-                    Disconnect();
+                    //Disconnect();
                     return;
                 }
 

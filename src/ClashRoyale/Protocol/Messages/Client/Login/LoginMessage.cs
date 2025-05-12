@@ -76,6 +76,7 @@ namespace ClashRoyale.Protocol.Messages.Client.Login
 
             var player = await Resources.Players.Login(UserId, UserToken);
 
+
             if (player != null)
             {
                 Device.Player = player;
@@ -103,6 +104,9 @@ namespace ClashRoyale.Protocol.Messages.Client.Login
                 {
                     Entries = player.Home.Stream
                 }.SendAsync();
+
+                await new NpcSectorStateMessage(Device).SendAsync();
+                Console.WriteLine("NPC send");
 
                 if (!player.Home.AllianceInfo.HasAlliance) return;
 

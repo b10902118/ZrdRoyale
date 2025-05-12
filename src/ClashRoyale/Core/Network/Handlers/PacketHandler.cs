@@ -57,6 +57,7 @@ namespace ClashRoyale.Core.Network.Handlers
 
         public override async void ChannelUnregistered(IChannelHandlerContext context)
         {
+            return;
             try
             {
                 var player = await Resources.Players.GetPlayerAsync(Device.Player.Home.Id, true);
